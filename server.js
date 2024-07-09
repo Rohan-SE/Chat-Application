@@ -20,11 +20,11 @@ export const ioFunction = ()=>{
     const io = socketHandler(server)
     return io
 }
-
+app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
-app.set('view engine', 'ejs');
 app.use(session({
     secret:process.env.SECRET,
     resave:false,
@@ -32,7 +32,6 @@ app.use(session({
 }))
 app.use(cors())
 app.use(flash())
-app.use(express.urlencoded({extended:true}))
 app.use(router)
 
 const port = 3002
