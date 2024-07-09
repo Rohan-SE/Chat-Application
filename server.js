@@ -10,13 +10,14 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 
 import router from './routes/userRoutes.js';
+import userController from './controllers/userController.js';
 
 const __dirname = path.resolve();
 
 dotenv.config()
 const app = express()
 const server = http.createServer(app)
-const io = socketHandler(server)
+socketHandler(server)
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true}))
@@ -30,10 +31,8 @@ app.use(session({
 app.use(cors())
 app.use(flash())
 app.use(router)
-
 const port = 3002
 dbConn().then(()=> server.listen(port,()=>{
     
 }))
 
-export default io

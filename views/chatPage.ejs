@@ -80,10 +80,8 @@
                 const token = this.user_id
                 if(token){
                     this.socket.emit('userConnected',token)
-                    console.log('Authenticated with Socket.io')
                 }else{
                     this.socket.emit('userConnected',token)
-      console.log('No token available');
                 }
             })
             this.socket.on('privateMessage',({senderId,message,recipient_id,timestamp})=>{

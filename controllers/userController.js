@@ -1,8 +1,6 @@
 import user from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import io from '../server.js'
-import socketHandler from '../config/socketConfig-backend.js'
 import dotenv from 'dotenv'
 import message from "../models/messageSchema.js"
 
@@ -36,9 +34,6 @@ const signup = async(req,res)=>{
             sameSite:'Strict'
         })
         const userid = await userObj.save()
-        io.on('connect',(socket)=>{
-           socket.emit('userConnected',userid._id)
-        })
         res.redirect('/users')
 
     } catch (error) {
@@ -69,9 +64,7 @@ const login = async (req,res)=>{
                     secure: true,
                     sameSite:'Strict'
                 })
-                io.on('connect',(socket)=>{
-                   socket.emit('userConnected',User._id)
-                })
+    
                 return res.redirect('/users')
             }
         })
