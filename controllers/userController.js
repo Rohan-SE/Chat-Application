@@ -70,7 +70,7 @@ const login = async (req,res)=>{
                     secure: true,
                     sameSite:'Strict'
                 })
-                const io = socketHandler(server)
+                const io = ioFunction()
                 io.on('connect',(socket)=>{
                    socket.emit('userConnected',User._id)
                 })
