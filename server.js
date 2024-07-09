@@ -16,7 +16,11 @@ const __dirname = path.resolve();
 dotenv.config()
 const app = express()
 const server = http.createServer(app)
-export const io = socketHandler(server)
+export const ioFunction = ()=>{
+    const io = socketHandler(server)
+    return io
+}
+
 app.set("views", path.join(__dirname, "views"));
 app.use(express.json())
 app.use(cookieParser())
