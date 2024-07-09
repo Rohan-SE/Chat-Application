@@ -16,10 +16,8 @@ const __dirname = path.resolve();
 dotenv.config()
 const app = express()
 const server = http.createServer(app)
-const ioFunction = ()=>{
-    const io = socketHandler(server)
-    return io
-}
+const io = socketHandler(server)
+
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true}))
@@ -39,4 +37,4 @@ dbConn().then(()=> server.listen(port,()=>{
     
 }))
 
-export default ioFunction
+export default server
