@@ -1,7 +1,7 @@
 import user from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {ioFunction} from '../server.js'
+import ioFunction from '../server.js'
 import dotenv from 'dotenv'
 import message from "../models/messageSchema.js"
 

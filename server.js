@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 dotenv.config()
 const app = express()
 const server = http.createServer(app)
-export const ioFunction = ()=>{
+const ioFunction = ()=>{
     const io = socketHandler(server)
     return io
 }
@@ -38,3 +38,5 @@ const port = 3002
 dbConn().then(()=> server.listen(port,()=>{
     
 }))
+
+export default ioFunction
