@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <title>Users</title>
+</head>
+<body class="bg-white w-full flex flex-col items-center h-screen text-black">
+  <nav class="flex w-full h-24 justify-end items-center">
+    <a href="/logout" class="mr-7 text-white bg-red-500 mb-2 cursor-pointer px-8 py-2 rounded-md border-2 border-zinc-800">Logout</a>
+  </nav>
+  <div class="h-3/4 overscroll-auto">
+    <% users.forEach(function(user){ %>
+      <div class="card bg-red-500 text-white w-96 shadow-xl mt-4">
+        <div class="card-body">
+          <h2 class="card-title"><%= user.name %></h2>
+          <div class="card-actions justify-end">
+            <a class="btn bg-black text-white" href="/chat/user/<%= user._id %>">Start Chat</a>
+          </div>
+        </div>
+      </div>
+
+  <% } ) %>
+  </div>
+
+</body>
+</html>

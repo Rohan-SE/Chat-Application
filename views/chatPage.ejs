@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <title>chatPage</title>
+</head>
+<body>
+    <div id="app" class="w-full h-screen flex flex-col justify-between bg-white text-black">
+      <div class="h-3/4 overflow-y-scroll">
+        <div v-for="message in messages">
+            <div class="chat chat-start" v-if="message.sender !==user_id">
+                <div class="chat-header">
+                  {{recipientName}}
+                  <time class="text-xs opacity-50">{{formatDate(message.timestamp)}}</time>
+                </div>
+                <div class="chat-bubble bg-red-600 text-white ">{{message.message}}</div>
+              </div>
+            <div class="chat chat-end" v-if="message.sender == user_id">
+                <div class="chat-header">
+                    {{senderName}}
+                  <time class="text-xs opacity-50">{{formatDate(message.timestamp)}}</time>
+                </div>
+                <div class="chat-bubble bg-red-500 text-white">{{message.message}}</div>
+              </div>
+        </div>
+      </div>
+        <form class="flex items-center" @submit.prevent="sendMessage">
+            <textarea class="w-full bg-transparent border-2 border-black resize-none py-2 rounded-lg" v-model="message"></textarea>
+            <button class="btn bg-red-500 text-white py-2">Send</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data(){
+            return {
+                message:'',
+            messages: <%- JSON.stringify(messages) %>,
+            recipientName: <%-JSON.stringify(userOneName) %>,
+            senderName: <%-JSON.stringify(userSenderName) %>,
+            user_id: <%- JSON.stringify(userid) %>,
+            }
+        },
+        methods:{
+            sendMessage(){
+
+                const recipientname = this.recipientName
+                const message = this.message
+                const userId = this.user_id
+                this.socket.emit('privateMessage',{recipientname,message,senderId:userId})
+                this.messages.push({
+                    sender:userId,
+                    message,
+                    timestamp: new Date()
+
+                })
+                this.message = ''
+            },
+            formatDate(dateString){
+                const options = {
+                    year: 'numeric',
+                    month:'short',
+                    day:'numeric',
+                    hour: '2-digit',
+                    minute:'2-digit',
+                    second:'2-digit'
+                }
+                const date = new Date(dateString)
+                return new Intl.DateTimeFormat(navigator.language,options).format(date)
+            }
+        },
+        created(){
+            this.socket = io()
+            this.socket.on('connect',()=>{
+                const token = this.user_id
+                if(token){
+                    this.socket.emit('userConnected',token)
+                    console.log('Authenticated with Socket.io')
+                }else{
+                    this.socket.emit('userConnected',token)
+      console.log('No token available');
+                }
+            })
+            this.socket.on('privateMessage',({senderId,message,recipient_id,timestamp})=>{
+                this.messages.push({
+                    sender:senderId,
+                    receiver:recipient_id,
+                    message,
+                    timestamp
+                })
+            })
+        }
+    })
+</script>
+</body>
+
+</html>
