@@ -1,7 +1,7 @@
 import user from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import ioFunction from '../server.js'
+import io from '../server.js'
 import socketHandler from '../config/socketConfig-backend.js'
 import dotenv from 'dotenv'
 import message from "../models/messageSchema.js"
@@ -36,7 +36,6 @@ const signup = async(req,res)=>{
             sameSite:'Strict'
         })
         const userid = await userObj.save()
-        const io = ioFunction()
         io.on('connect',(socket)=>{
            socket.emit('userConnected',userid._id)
         })
@@ -70,7 +69,6 @@ const login = async (req,res)=>{
                     secure: true,
                     sameSite:'Strict'
                 })
-                const io = ioFunction()
                 io.on('connect',(socket)=>{
                    socket.emit('userConnected',User._id)
                 })
