@@ -77,7 +77,6 @@ const db = getDatabase(app)
                     messageNumber:messageNumber.snapshot.val(),
                     timestamp:new Date().toISOString()
                 }
-                console.log(data)
                 push(ref(db,'messages'),data)
                 this.newMessage = ''
             },
