@@ -97,6 +97,7 @@ const db = getDatabase(app)
      
         onValue(ref(db,'messages'),(snapshot)=>{
             const msgObj = snapshot.val()
+            console.log(msgObj)
             this.messages = Object.values(msgObj)
         })
     }
