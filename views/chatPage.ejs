@@ -10,8 +10,8 @@
 <body>
     <div id="app" class="w-full h-screen flex flex-col justify-between bg-white text-black">
       <div class="h-3/4 overflow-y-scroll">
-        <div v-for="message in messages" v-if="message.recipientname == recipientName">
-            <div class="chat chat-start" v-if="message.sender !==user_id">
+        <div v-for="message in messages">
+            <div class="chat chat-start" v-if="message.sender !==user_id && message.sender == message.receiver">
                 <div class="chat-header">
                   {{recipientName}}
                   <time class="text-xs opacity-50">{{formatDate(message.timestamp)}}</time>
