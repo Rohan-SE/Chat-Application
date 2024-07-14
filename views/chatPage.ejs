@@ -18,7 +18,7 @@
                 </div>
                 <div class="chat-bubble bg-red-600 text-white ">{{message.message}}</div>
               </div>
-            <div class="chat chat-end" v-if="message.sender == user_id">
+            <div class="chat chat-end" v-if="message.sender == user_id && message.receiver === recipientId">
                 <div class="chat-header">
                     {{senderName}}
                     <time class="text-xs opacity-50">{{formatDate(message.timestamp)}}</time>
