@@ -98,9 +98,10 @@ const chat = async(req,res)=>{
     const Recievermessages = await message.find({$and:[{sender:user_one._id,receiver:user_two._id}]})
     const allMessages = [...Recievermessages, ...Sendermessages].sort((a,b)=>a.timestamp - b.timestamp)
     const userid = user_two._id
+    const recieverId = user_one._id
     const userSenderName = user_two.name
     const userOneName = user_one.name
-    res.render('chatPage',{messages:allMessages,userid,userOneName,userSenderName})
+    res.render('chatPage',{messages:allMessages,userid,recieverId,userOneName,userSenderName})
 }
 
 const userController = {signup,login,signupPage,loginPage,getUsers,chat,logout}
