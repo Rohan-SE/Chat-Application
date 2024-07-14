@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="app" class="w-full h-screen flex flex-col justify-between bg-white text-black">
+        {{messages}}
       <div class="h-3/4 overflow-y-scroll">
         <div v-for="message in messages" v-if="recipientName === message.recipientname">
             <div class="chat chat-start" v-if="message.sender !==user_id">
@@ -97,6 +98,7 @@ const db = getDatabase(app)
      
         onValue(ref(db,'messages'),(snapshot)=>{
             const msgObj = snapshot.val()
+            console.log(msgObj)
             this.messages = Object.values(msgObj)
         })
     }
